@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <!-- <base href="https://kratikadalodia.github.io/Event-Hub/"> -->
+
+    <title>Student Login</title>
+</head>
+<body>
+    <div class = "wrapper">
+        <form action="">
+            <h1>Student Login</h1>
+            <div class = "inputbox">
+                <input type="text" placeholder="Email" id="email" required>
+                <i class='bx bxs-user'></i>
+            </div>
+
+            <div class="inputbox">
+                <input type="password" placeholder="Password" id="password" required> 
+                <i class='bx bx-hide' id="togglePassword"></i>
+            </div>
+            
+            <!-- <div class="remember-forgot">
+                <label> <input type="checkbox"> Remember me </label>
+                <a href="#">Forgot password</a>
+            </div> -->
+            
+            <button type="submit" id="submit" class="btn">
+                Login
+            </button>
+            
+            <div class="registerlink">
+                <p>Dont have an account?
+                    <a href="register2.html">Register here</a> </p>
+                </div>
+            <!-- <br> -->
+            <div class="registerlink">
+                <p>Organiser Login?
+                    <a href="org_login.html">Login here</a> </p>
+                </div>
+            </form>
+        </div>
+        
+    
+        <script type="module" src="login2.js" defer></script>
+    </body>
+    </html>
