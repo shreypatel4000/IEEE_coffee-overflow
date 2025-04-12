@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Career Guidance</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #ede7f6);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .fade-in {
+      animation: fadeIn 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .typing::after {
+      content: "|";
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .glow:hover {
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.8);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .slide-in {
+      transform: translateY(30px);
+      animation: slideIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center font-sans">
+
+  <div class="bg-white shadow-2xl rounded-3xl p-10 max-w-lg w-full relative border-4 border-indigo-300 slide-in">
+    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="AI Avatar" class="w-20 h-20 rounded-full border-4 border-indigo-400 shadow-lg bg-white">
+    </div>
+
+    <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-4 mt-12 animate-fadeIn">🔮 Career Predictor</h1>
+    <p class="text-center text-gray-600 mb-6 fade-in">Let AI suggest your best-fit career & colleges!</p>
+
+    <form id="careerForm" class="space-y-4 fade-in">
+      <input type="text" id="Your name" placeholder="👤 Your Name" class="w-full border-2 border-indigo-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:scale-105 transition-transform duration-200" required>
+      <input type="number" id="Age" placeholder="🎂 Your Age" class="w-full border-2 border-indigo-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:scale-105 transition-transform duration-200" required>
+      <input type="text" id="interests" placeholder="💡 Your Interests (e.g., Teaching)" class="w-full border-2 border-indigo-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:scale-105 transition-transform duration-200" required>
+      <input type="text" id="skills" placeholder="🛠 Your Skills (e.g., Python)" class="w-full border-2 border-indigo-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:scale-105 transition-transform duration-200" required>
+      <input type="text" id="goal" placeholder="🎯 Your Goal (e.g., AI Engineer)" class="w-full border-2 border-indigo-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:scale-105 transition-transform duration-200" required>
+
+      <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition duration-200 animate-pulse">
+        🚀 Get Suggestions
+      </button>
+    </form>
+
+    <div id="response" class="mt-6 text-gray-800 text-base font-medium whitespace-pre-line typing fade-in"></div>
+    <div id="university-list" class="mt-6 text-sm space-y-3 fade-in"></div>
+  </div>
+
+  <script>
+    document.getElementById("careerForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const interests = document.getElementById("interests").value.trim();
+      const skills = document.getElementById("skills").value.trim();
+      const goal = document.getElementById("goal").value.trim();
+      const resBox = document.getElementById("response");
+      const uniBox = document.getElementById("university-list");
+
+      resBox.textContent = "";
+      uniBox.innerHTML = "";
+
+      const suggestionText = `✅ Based on your interest in "${interests}", your skills in "${skills}", and your goal of becoming a "${goal}", we recommend exploring specializations in AI, Data Science, and related programs.`;
+      let i = 0;
+      const type = () => {
+        if (i < suggestionText.length) {
+          resBox.textContent += suggestionText.charAt(i);
+          i++;
+          setTimeout(type, 30);
+        } else {
+          resBox.classList.remove("typing");
+        }
+      };
+      type();
+
+      try {
+        const url = `https://universities.hipolabs.com/search?name=${encodeURIComponent(goal)}`;
+        const response = await fetch(url);
+        const universities = await response.json();
+
+        if (universities.length > 0) {
+          uniBox.innerHTML = "<h3 class='text-lg font-semibold text-indigo-700'>🏛 Suggested Universities:</h3>";
+          universities.slice(0, 5).forEach((uni) => {
+            uniBox.innerHTML += `
+              <div class="bg-indigo-50 p-3 rounded-xl shadow border-l-4 border-indigo-400 glow">
+                <a href="${uni.web_pages[0]}" target="_blank" class="text-blue-600 hover:underline font-semibold">
+                  ${uni.name}
+                </a>
+                <p class="text-gray-600 text-sm">${uni.country}</p>
+              </div>`;
+          });
+        } else {
+          uniBox.innerHTML = "<p class='mt-4 text-red-500'>❌ No universities found matching your goal.</p>";
+        }
+      } catch (error) {
+        resBox.textContent = "⚠️ Failed to get suggestions. Please check your internet and try again.";
+        console.error("Error fetching university:", error);
+      }
+    });
+  </script>
+
+</body>
+</html>
