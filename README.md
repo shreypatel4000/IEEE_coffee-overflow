@@ -13,9 +13,15 @@ Chat Interface – users input their responses and receive tailored guidance fro
 # How It Works
 The chatbot is trained to ask specific, strategic questions to help kids identify their interests, skills, and goals. Based on their responses, it provides career paths, educational suggestions, and motivational feedback.
 
-Tech Stack
+# Tech Stack
 Frontend: [html, Tailwind css]
 
 Backend: [FastAPI, OpenRouter]
 
 AI: [Llama API]
+
+# Getting Started
+1. Clone the repo.
+2. Install dependencies [fastapi, requests, json, traceback].
+3. Enter your key (or ask me for one, current one might expire).
+4. Run a FastAPI cli in terminal, and run client.py in other terminal.
