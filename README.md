@@ -25,3 +25,4 @@ AI: [Llama API]
 2. Install dependencies [fastapi, requests, json, traceback].
 3. Enter your key (or ask me for one, current one might expire).
 4. Run a FastAPI cli in terminal, and run client.py in other terminal.
+5. To run the login and singup pages, run the html and css files in vscode.
